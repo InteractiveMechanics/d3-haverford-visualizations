@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>[REPLACE TITLE]</title>
+    <title>The Lancaster Avenue Project - The Evolution of Modernity along Lancaster Avenue</title>
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,900' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -21,8 +21,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
-                    <h1>[REPLACE TITLE]</h1>
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique elementum suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras id luctus arcu, in cursus nulla. Proin pellentesque gravida turpis malesuada auctor.</p>
+                    <h1>The Lancaster Avenue Project</h1>
+                    <p class="lead">Over this past semester, Haverford's "Walter Benjamin on Lancaster Avenue" course set out to document the evolution of modernity along Lancaster Avenue. Here, we explore alternative ways to visualize the rich narrative content to find complex and meaningful correlations between themes, objects, and the group's evaluation.</p>
                 </div>
             </div>
         </div>
@@ -33,11 +33,14 @@
     <section class="data">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4">
-                    <h3>Common tags & popular words</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique elementum suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras id luctus arcu, in cursus nulla. Proin pellentesque gravida turpis malesuada auctor.</p>
+                <div class="col-sm-3 col-sm-offset-1">
+                    <h3>Popular tags & words</h3>
+                    <p>After reviewing the tags and descriptive narrative for all objects in the collection, we analyzed the usage of unique tags and recurring words. Common English words were stripped out leaving us with a final list for comparison.</p>
+                    <hr class="half">
+                    <h1>336 <small>Total items</small></h1>
+                    <h1>113 <small>Unique tags</small></h1>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3 col-sm-offset-1">
                     <h4>Most common tags</h4>
                     <table class="table table-bordered table-hover">
                         <tbody>
@@ -59,7 +62,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <h4>Most prevalent words</h4>
                     <table class="table table-bordered table-hover">
                         <tbody>
@@ -83,7 +86,9 @@
                 </div>
             </div>
             <hr>
-            <div class="line-graph"></div>
+            <div class="line-graph">
+                <h2 class="text-center">Average Rarity and "Sense of the Modern" over time</h2>
+            </div>
         </div>
     </section>
 
@@ -132,22 +137,14 @@
             y.domain(d3.extent(data, function(d) { return d.rarity; }));
 
             var rarity = d3.svg.line()
-                .interpolate("cardinal")
+                .interpolate("linear")
                 .x(function(d)  {  return x(d.date); })
                 .y(function(d) {  return y(d.rarity); });
 
             var modern = d3.svg.line()
-                .interpolate("cardinal")
+                .interpolate("linear")
                 .x(function(d)  {  return x(d.date); })
                 .y(function(d) {  return y(d.modern); });
-
-            svg.append("path")
-                .attr("class", "line-rarity")
-                .attr("d", rarity(data));
-
-            svg.append("path")
-                .attr("class", "line-modern")
-                .attr("d", modern(data));
 
             svg.append("g")
                 .attr("class", "x axis")
@@ -158,6 +155,16 @@
                 .attr("class", "y axis")
                 .call(yAxis);
 
+            svg.selectAll(".line")
+                .data(data)
+                .enter()
+                .append("line")
+                .attr("class", "line")
+                .attr("x1", function(d)  {  return x(d.date); })
+                .attr("x2", function(d)  {  return x(d.date); })
+                .attr("y1", function(d) {  return y(d.modern); })
+                .attr("y2", function(d) {  return y(d.rarity); });
+
             svg.selectAll(".dot")
                 .data(data)
                 .enter()
@@ -165,7 +172,7 @@
                 .attr("class", "dot-rarity")
                 .attr("cx", rarity.x())
                 .attr("cy", rarity.y())
-                .attr("r", 2);
+                .attr("r", 3);
 
             svg.selectAll(".dot")
                 .data(data)
@@ -174,46 +181,58 @@
                 .attr("class", "dot-modern")
                 .attr("cx", modern.x())
                 .attr("cy", modern.y())
-                .attr("r", 2);
+                .attr("r", 3);
         });
 
         d3.json('data/clusters.json', function (error, data) {
             var diameter = 600,
-                format = d3.format(",d");
-
-            var cluster = d3.layout.pack()
-                .size([diameter - 4, diameter - 4])
-                .value(function(d) { return d.count; });
+                posX = 0;
+                lastX = 0;
 
             var pack = d3.layout.pack()
-                .sort(null)
-                .size([1200, 500])
-                .padding(1.5).value(function(d) { return d.count; });;
+                .size([200, 200])
+                .value(function(d) { return d.count*1.5; })
+                .padding(5);
 
             var svg = d3.select(".clusters")
                 .append("svg")
-                .attr("width", '100%')
-                .attr("height", diameter)
+                .attr("width", 960)
+                .attr("height", diameter);
+                
+            var cluster = svg.selectAll(".cluster")
+                .data(data.children);
+            
+            var clusterEnter = cluster.enter()
                 .append("g")
-                .attr("transform", "translate(2,2)");
+                .attr("transform", function(d) { 
+                    if (posX === 0){
+                        posX = d.count*1.5 + 20;
+                    } else {
+                        posX = posX + lastX + d.count*1.5 + 20;
+                    }
+                    lastX = d.count*1.5;
+                    return "translate(" + posX + "," + diameter/2 + ")"; 
+                })
+                .append("circle")
+                .attr("class", "cluster")
+                .attr("r", function(d) {  return d.count*1.5; });
 
-            var node = svg.datum(data)
-                .selectAll(".node")
-                .data(cluster.nodes)
-                .enter().append("g")
-                .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
-                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+            cluster.append("text")
+                .text(function(d) { return d.name; })
+                .attr("class", "label")
+                .attr("text-anchor", "middle")
+                .attr("y", function(d) {  return d.count*1.5 + 40; });
+            
+            var tags = cluster.selectAll(".cluster")
+                .data(pack)
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", function(d) { return "translate(" + (d.x) + "," + d.y + ")"; });
 
-            node.append("title")
-                .text(function(d) { return d.name + (d.children ? "" : ": " + format(d.count)); });
-
-            node.append("circle")
-                .attr("r", function(d) { return d.count * (!d.children ? 4 : 2); });
-
-            node.filter(function(d) { return d.parent && d.children; }).append("text")
-                .attr("y", "35%")
-                .style("text-anchor", "middle")
-                .text(function(d) { return d.name; });
+            tags.append("circle")
+                .attr("class", "tag")
+                .attr("r", function(d) { return d.count * 3; });
             
         });
         d3.select(self.frameElement).style("height", "600px");
