@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>[REPLACE TITLE]</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,900' rel='stylesheet' type='text/css'>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h1>[REPLACE TITLE]</h1>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique elementum suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras id luctus arcu, in cursus nulla. Proin pellentesque gravida turpis malesuada auctor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="clusters">
+
+    </section>
+    <section class="data">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3>Common tags & popular words</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique elementum suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras id luctus arcu, in cursus nulla. Proin pellentesque gravida turpis malesuada auctor.</p>
+                </div>
+                <div class="col-sm-4">
+                    <h4>Most common tags</h4>
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                            <tr><td>discord</td><td>20</td></tr>
+                            <tr><td>end of an era</td><td>15</td></tr>
+                            <tr><td>class</td><td>11</td></tr>
+                            <tr><td>architecture</td><td>10</td></tr>
+                            <tr><td>death</td><td>10</td></tr>
+                            <tr><td>advertisement</td><td>8</td></tr>
+                            <tr><td>automobile</td><td>8</td></tr>
+                            <tr><td>high-spirited triviality and the joke</td><td>8</td></tr>
+                            <tr><td>aesthetic</td><td>6</td></tr>
+                            <tr><td>Christophalia</td><td>6</td></tr>
+                            <tr><td>Names</td><td>6</td></tr>
+                            <tr><td>idleness and pleasurable looking</td><td>5</td></tr>
+                            <tr><td>Cassatt</td><td>4</td></tr>
+                            <tr><td>childhood</td><td>4</td></tr>
+                            <tr><td>construction</td><td>4</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <h4>Most prevalent words</h4>
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                            <tr><td>Lancaster</td><td>62</td></tr>
+                            <tr><td>line</td><td>43</td></tr>
+                            <tr><td>all</td><td>40</td></tr>
+                            <tr><td>new</td><td>39</td></tr>
+                            <tr><td>Philadelphia</td><td>35</td></tr>
+                            <tr><td>railroad</td><td>32</td></tr>
+                            <tr><td>main</td><td>32</td></tr>
+                            <tr><td>been</td><td>27</td></tr>
+                            <tr><td>more</td><td>26</td></tr>
+                            <tr><td>Bryn Mawr</td><td>26</td></tr>
+                            <tr><td>home</td><td>26</td></tr>
+                            <tr><td>time</td><td>25</td></tr>
+                            <tr><td>over</td><td>25</td></tr>
+                            <tr><td>up</td><td>24</td></tr>
+                            <tr><td>first</td><td>24</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="line-graph"></div>
+        </div>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+
+        d3.csv("data/date-to-numbers.csv", function(error, data) {
+            var margin = {top: 80, right: 10, bottom: 30, left: 50},
+                width = 960 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom,
+                parseDate = d3.time.format("%Y").parse;
+            
+            var x = d3.time.scale()
+                .range([0, width]);
+            var y = d3.scale.linear()
+                .range([height, 0]);
+            
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+            
+            var rarity = d3.svg.line()
+                .x(function(d) { return x(d.date); })
+                .y(function(d) { return y(d.rarity); });
+            var modern = d3.svg.line()
+                .x(function(d) { return x(d.date); })
+                .y(function(d) { return y(d.modern); });
+            
+            var svg = d3.select(".line-graph")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            data.forEach(function(d) {
+                d.date = parseDate(d.date);
+            });
+         
+            x.domain(d3.extent(data, function(d) { return d.date; }));
+            y.domain(d3.extent(data, function(d) { return d.rarity; }));
+
+            var rarity = d3.svg.line()
+                .interpolate("cardinal")
+                .x(function(d)  {  return x(d.date); })
+                .y(function(d) {  return y(d.rarity); });
+
+            var modern = d3.svg.line()
+                .interpolate("cardinal")
+                .x(function(d)  {  return x(d.date); })
+                .y(function(d) {  return y(d.modern); });
+
+            svg.append("path")
+                .attr("class", "line-rarity")
+                .attr("d", rarity(data));
+
+            svg.append("path")
+                .attr("class", "line-modern")
+                .attr("d", modern(data));
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+        
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            svg.selectAll(".dot")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("class", "dot-rarity")
+                .attr("cx", rarity.x())
+                .attr("cy", rarity.y())
+                .attr("r", 2);
+
+            svg.selectAll(".dot")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("class", "dot-modern")
+                .attr("cx", modern.x())
+                .attr("cy", modern.y())
+                .attr("r", 2);
+        });
+
+        d3.json('data/clusters.json', function (error, data) {
+            var diameter = 600,
+                format = d3.format(",d");
+
+            var cluster = d3.layout.pack()
+                .size([diameter - 4, diameter - 4])
+                .value(function(d) { return d.count; });
+
+            var pack = d3.layout.pack()
+                .sort(null)
+                .size([1200, 500])
+                .padding(1.5).value(function(d) { return d.count; });;
+
+            var svg = d3.select(".clusters")
+                .append("svg")
+                .attr("width", '100%')
+                .attr("height", diameter)
+                .append("g")
+                .attr("transform", "translate(2,2)");
+
+            var node = svg.datum(data)
+                .selectAll(".node")
+                .data(cluster.nodes)
+                .enter().append("g")
+                .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+            node.append("title")
+                .text(function(d) { return d.name + (d.children ? "" : ": " + format(d.count)); });
+
+            node.append("circle")
+                .attr("r", function(d) { return d.count * (!d.children ? 4 : 2); });
+
+            node.filter(function(d) { return d.parent && d.children; }).append("text")
+                .attr("y", "35%")
+                .style("text-anchor", "middle")
+                .text(function(d) { return d.name; });
+            
+        });
+        d3.select(self.frameElement).style("height", "600px");
+        
+    </script>
+</body>
+</html>

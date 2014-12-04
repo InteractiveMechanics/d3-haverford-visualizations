@@ -1,0 +1,72 @@
+{
+    "name": "Item Types",
+    "children": [
+        {
+           "name": "Event",
+           "count": 76,
+           "children": [
+                {"name": "class", "rarity": 4, "modern": 2.67, "count": 6},
+                {"name": "discord", "rarity": 5.83, "modern": 2.83, "count": 6},
+                {"name": "death", "rarity": 7.5, "modern": 3.25, "count": 4},
+                {"name": "end of an era", "rarity": 4, "modern": 1.5, "count": 4},
+                {"name": "automobile", "rarity": 4.33, "modern": 4, "count": 3},
+                {"name": "boredom", "rarity": 4.5, "modern": 4.5, "count": 2},
+                {"name": "capital", "rarity": 5.5, "modern": 3, "count": 2},
+                {"name": "construction", "rarity": 4, "modern": 2, "count": 2},
+                {"name": "crime", "rarity": 5, "modern": 3, "count": 2},
+                {"name": "labor", "rarity": 3, "modern": 4.5, "count": 2}
+            ]
+        },
+        {
+           "name": "Person",
+           "count": 39,
+           "children": [
+                {"name": "high-spirited triviality and the joke", "rarity": 7.5, "modern": 4.167, "count": 6},
+                {"name": "discord", "rarity": 6.33, "modern": 4, "count": 3},
+                {"name": "aesthetic", "rarity": 2, "modern": 3, "count": 2},
+                {"name": "childhood", "rarity": 8, "modern": 5, "count": 2}, 
+                {"name": "academic", "rarity": 7, "modern": 4, "count": 1},
+                {"name": "alcohol", "rarity": 3, "modern": 4, "count": 1}
+            ]
+        },
+        {
+           "name": "Place",
+           "count": 58,
+           "children": [
+                {"name": "discord", "rarity": 4.11, "modern": 3.67, "count": 9},
+                {"name": "architecture", "rarity": 4.33, "modern": 3.33, "count": 6},
+                {"name": "death", "rarity": 6, "modern": 2.75, "count": 4},
+                {"name": "Names", "rarity": 3.25, "modern": 3, "count": 4},
+                {"name": "Ardmore", "rarity": 2, "modern": 2, "count": 2},
+                {"name": "asylum", "rarity": 3, "modern": 5, "count": 2},
+                {"name": "automobile", "rarity": 4, "modern": 5, "count": 2},
+                {"name": "borderlands", "rarity": 6.5, "modern": 4.5, "count": 2},
+                {"name": "class", "rarity": 2, "modern": 2, "count": 2},
+                {"name": "end of an era", "rarity": 4.5, "modern": 3.5, "count": 2},
+                {"name": "high-spirited triviality and the joke", "rarity": 4, "modern": 4, "count": 2},
+                {"name": "idleness and pleasurable looking", "rarity": 6.5, "modern": 4, "count": 2}
+            ]
+        },
+        {
+           "name": "Thing",
+           "count": 105,
+           "children": [
+                {"name": "advertisement", "rarity": 6, "modern": 3.6, "count": 7},
+                {"name": "end of an era", "rarity": 5, "modern": 4.43, "count": 7},
+                {"name": "architecture", "rarity": 4.5, "modern": 3, "count": 4},
+                {"name": "Christophalia", "rarity": 7.33, "modern": 4, "count": 4},
+                {"name": "Crime", "rarity": 6.75, "modern": 3, "count": 4},
+                {"name": "automobile", "rarity": 7.33, "modern": 4, "count": 3},
+                {"name": "class", "rarity": 6.33, "modern": 2.33, "count": 3},
+                {"name": "aesthetic", "rarity": 9, "modern": 5, "count": 2},
+                {"name": "Cassatt", "rarity": 9, "modern": 3.5, "count": 2},
+                {"name": "children", "rarity": 9.5, "modern": 5, "count": 2},
+                {"name": "construction", "rarity": 6.5, "modern": 4, "count": 2},
+                {"name": "convenience", "rarity": 4, "modern": 3.5, "count": 2},
+                {"name": "currency", "rarity": 5, "modern": 3, "count": 2},
+                {"name": "danger", "rarity": 4.5, "modern": 3, "count": 2},
+                {"name": "discord", "rarity": 4.5, "modern": 2.5, "count": 2}
+            ]
+        }
+    ]
+}

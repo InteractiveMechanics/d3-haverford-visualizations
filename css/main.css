@@ -1,0 +1,86 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+section.hero {
+    margin: 80px 0;
+}
+section.hero h1 {
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+section.hero p.lead {
+
+}
+
+
+section.clusters {
+    padding: 0;
+    margin-bottom: 80px;
+    background: #f1f2f2;
+    height: 600px;
+    position: relative;
+}
+section.clusters:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    left: 0;
+    right: 0;
+    background: -moz-linear-gradient(top, transparent 0%, transparent 24%, rgba(0, 0, 0, 0.1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(24%, transparent), color-stop(100%, rgba(0, 0, 0, 0.1)));
+    background: -webkit-linear-gradient(top, transparent 0%, transparent 24%, rgba(0, 0, 0, 0.1) 100%);
+    background: -o-linear-gradient(top, transparent 0%, transparent 24%, rgba(0, 0, 0, 0.1) 100%);
+    background: -ms-linear-gradient(top, transparent 0%, transparent 24%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(to bottom, transparent 0%, transparent 24%, rgba(0, 0, 0, 0.1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#33000000',GradientType=0 );
+}
+section.clusters svg {
+    margin: 0 auto;
+    display: block;
+}
+section.clusters .node:first-of-type {
+    fill: none!important;
+}
+section.clusters .node {
+    fill: steelblue;
+    opacity: 0.5;
+}
+section.clusters .node.leaf {
+    fill: white;
+    opacity: 1;
+}
+section.clusters text {
+    fill: black;
+}
+
+section.data {}
+section.data .line-graph svg {
+    margin: 70px auto 100px;
+    display: block;
+}
+section.data .line-graph .axis path,
+section.data .line-graph .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+section.data .line-graph .line-rarity {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+section.data .line-graph .line-modern {
+    fill: none;
+    stroke: red;
+    stroke-width: 1.5px;
+}
+
+section.data .line-graph .dot-rarity {
+    fill: steelblue;
+}
+section.data .line-graph .dot-modern {
+    fill: red;
+}
