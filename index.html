@@ -37,8 +37,9 @@
                     <h3>Popular tags & words</h3>
                     <p>After reviewing the tags and descriptive narrative for all objects in the collection, we analyzed the usage of unique tags and recurring words. Common English words were stripped out leaving us with a final list for comparison.</p>
                     <hr class="half">
-                    <h1>336 <small>Total items</small></h1>
-                    <h1>113 <small>Unique tags</small></h1>
+                    <h1>336 <span class="glyphicon glyphicon-stats"></span><small>Total items</small></h1>
+                    <h1>113 <span class="glyphicon glyphicon-tag"></span><small>Unique tags</small></h1>
+                    <h1>217 <span class="glyphicon glyphicon-calendar"></span><small>Years of data</small></h1>
                 </div>
                 <div class="col-sm-3 col-sm-offset-1">
                     <h4>Most common tags</h4>
@@ -87,7 +88,7 @@
             </div>
             <hr>
             <div class="line-graph">
-                <h2 class="text-center">Average Rarity and "Sense of the Modern" over time</h2>
+                <h2 class="text-center">Average <b class="rarity">Rarity</b> and <b class="modern">"Sense of the Modern"</b> over time</h2>
             </div>
         </div>
     </section>
@@ -146,6 +147,13 @@
                 .x(function(d)  {  return x(d.date); })
                 .y(function(d) {  return y(d.modern); });
 
+            var tooltip = d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("z-index", "100")
+                .style("visibility", "hidden");
+
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
@@ -182,6 +190,19 @@
                 .attr("cx", modern.x())
                 .attr("cy", modern.y())
                 .attr("r", 3);
+                
+            svg.selectAll(".invisible-line")
+                .data(data)
+                .enter()
+                .append("line")
+                .attr("class", "invisible-line")
+                .attr("x1", function(d)  {  return x(d.date); })
+                .attr("x2", function(d)  {  return x(d.date); })
+                .attr("y1", 0)
+                .attr("y2", height)
+                .on("mouseover", function(d){ return tooltip.style("visibility", "visible").html( '<b>Rarity:</b> ' + d.rarity + ' of 10' + '<br><b>Sense of the Modern:</b> ' + d.modern + ' of 5' ); })
+                .on("mousemove", function(d){ return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px"); })
+                .on("mouseout", function(d){ return tooltip.style("visibility", "hidden"); });
         });
 
         d3.json('data/clusters.json', function (error, data) {
@@ -194,10 +215,17 @@
                 .value(function(d) { return d.count*1.5; })
                 .padding(5);
 
+            var tooltip = d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("z-index", "100")
+                .style("visibility", "hidden");
+
             var svg = d3.select(".clusters")
                 .append("svg")
                 .attr("width", 960)
-                .attr("height", diameter);
+                .attr("height", diameter + 30);
                 
             var cluster = svg.selectAll(".cluster")
                 .data(data.children);
@@ -228,11 +256,14 @@
                 .enter()
                 .append("g")
                 .attr("class", "node")
-                .attr("transform", function(d) { return "translate(" + (d.x) + "," + d.y + ")"; });
+                .attr("transform", function(d) { return "translate(" + (d.x) + "," + d.y + ")"; })
 
             tags.append("circle")
                 .attr("class", "tag")
-                .attr("r", function(d) { return d.count * 3; });
+                .attr("r", function(d) { return d.count * 3; })
+                .on("mouseover", function(d){ return tooltip.style("visibility", "visible").html( '<h3>' + d.name + '</h3><b>Rarity:</b> ' + d.rarity + ' of 10' + '<br><b>Sense of the Modern:</b> ' + d.modern + ' of 5' ); })
+                .on("mousemove", function(d){ return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px"); })
+                .on("mouseout", function(d){ return tooltip.style("visibility", "hidden"); });
             
         });
         d3.select(self.frameElement).style("height", "600px");

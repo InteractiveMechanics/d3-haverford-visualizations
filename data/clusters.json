@@ -2,7 +2,7 @@
     "name": "Item Types",
     "children": [
         {
-           "name": "Event",
+           "name": "Events",
            "count": 76,
            "children": [
                 {"name": "class", "rarity": 4, "modern": 2.67, "count": 6},
@@ -18,7 +18,7 @@
             ]
         },
         {
-           "name": "Person",
+           "name": "Persons",
            "count": 39,
            "children": [
                 {"name": "high-spirited triviality and the joke", "rarity": 7.5, "modern": 4.167, "count": 6},
@@ -30,7 +30,7 @@
             ]
         },
         {
-           "name": "Place",
+           "name": "Places",
            "count": 58,
            "children": [
                 {"name": "discord", "rarity": 4.11, "modern": 3.67, "count": 9},
@@ -48,7 +48,7 @@
             ]
         },
         {
-           "name": "Thing",
+           "name": "Things",
            "count": 105,
            "children": [
                 {"name": "advertisement", "rarity": 6, "modern": 3.6, "count": 7},

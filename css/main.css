@@ -3,17 +3,36 @@ body {
 }
 
 
+.tooltip {
+    background: white;
+    background: rgba(255,255,255,0.85);
+    max-width: 240px;
+    opacity: 1;
+    padding: 15px 20px;
+    border: 1px solid #f1f2f2;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    line-height: 1.4;
+}
+.tooltip h3 {
+    margin: 5px 0 10px;
+}
+
+
 section.hero {
-    margin: 80px 0;
+    padding: 80px 0 90px;
+    background: url(background.jpg);
+    background-size: cover;
 }
 section.hero h1 {
     font-weight: 300;
     margin-bottom: 20px;
+    color: white;
 }
 section.hero p.lead {
     line-height: 1.8;
     font-weight: 300;
-    color: #666;
+    color: white;
+    color: rgba(255,255,255,0.8);
 }
 
 
@@ -21,7 +40,7 @@ section.clusters {
     padding: 0;
     margin-bottom: 80px;
     background: #f1f2f2;
-    height: 600px;
+    height: 630px;
     position: relative;
 }
 section.clusters:after {
@@ -44,10 +63,13 @@ section.clusters svg {
     display: block;
 }
 section.clusters .cluster {
-    fill-opacity: 0.25;
+    fill-opacity: 0.05;
+    stroke: #AAA;
+    stroke-width: 4px;
+    stroke-dasharray: 10 10;
 }
 section.clusters .node {
-    fill: aqua;
+    fill: #e6550d;
     fill-opacity: 1;
 }
 section.clusters text.label {
@@ -88,6 +110,9 @@ section.data h1 small {
     text-transform: uppercase;
     margin-top: 8px;
 }
+section.data h1 span {
+    font-size: 18px;
+}
 
 section.data table {
     font-size: 12px;
@@ -104,6 +129,15 @@ section.data .line-graph h2 {
     font-weight: 300;
     margin: 100px 0 0;
 }
+section.data .line-graph h2 b.rarity {
+    color: steelblue;
+    font-weight: 700;
+}
+section.data .line-graph h2 b.modern {
+    color: red;
+    font-weight: 700;
+}
+
 section.data .line-graph svg {
     margin: 30px auto 100px;
     display: block;
@@ -131,6 +165,12 @@ section.data .line-graph .line {
     stroke: #CCC;
     stroke-width: 1.5px;
     opacity: 0.4;
+}
+section.data .line-graph .invisible-line {
+    fill: none;
+    stroke: #CCC;
+    stroke-width: 10px;
+    opacity: 0;
 }
 
 section.data .line-graph .dot-rarity {
