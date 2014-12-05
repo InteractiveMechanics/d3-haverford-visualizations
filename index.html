@@ -206,10 +206,15 @@
         });
 
         d3.json('data/clusters.json', function (error, data) {
-            var diameter = 600,
-                posX = 0;
-                lastX = 0;
+            var diameter = 630;
+            var color = d3.scale.linear()
+                .domain([1,5,10])
+                .range(["#ffeda0", "#feb24c", "#f03b20"]);
 
+            var pack = d3.layout.pack()
+                .size([diameter - 4, diameter - 4])
+                .value(function(d) { return d.count; })
+                .padding(3);
 
             var tooltip = d3.select("body")
                 .append("div")
@@ -220,48 +225,34 @@
 
             var svg = d3.select(".clusters")
                 .append("svg")
-                .attr("width", 960)
-                .attr("height", diameter + 30);
-                
-            var cluster = svg.selectAll(".cluster")
-                .data(data.children);
-            
-            var clusterEnter = cluster.enter()
+                .attr("width", diameter)
+                .attr("height", diameter)
                 .append("g")
-                .attr("transform", function(d) { 
-                    if (posX === 0){
-                        posX = (d.count*1.5 + 20);
-                    } else {
-                        posX = posX + lastX + d.count*1.5 + 20;
-                    }
-                    lastX = d.count*1.5;
-                    return "translate(" + posX + "," + diameter/2 + ")"; 
-                })
-                .append("g")
-                .append("circle")
-                .attr("class", "cluster")
-                .attr("r", function(d) {  return d.count*1.5; });
+                .attr("transform", "translate(2,2)");
 
-            cluster.append("text")
-                .text(function(d) { return d.name; })
-                .attr("class", "label")
-                .attr("text-anchor", "middle")
-                .attr("y", function(d) {  return d.count*1.5 + 40; });
-            
+            d3.json("data/clusters.json", function(error, root) {
+                var node = svg.datum(root).selectAll(".node")
+                    .data(pack.nodes)
+                    .enter().append("g")
+                    .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+                    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-            var tags = cluster.selectAll(".cluster")
-                .data(d3.layout.pack().sort(null).value(function(d) { return d.parent.count; }))
-                .enter()
-                .append("g")
-                .attr("class", "node")
-                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-                .append("circle")
-                .attr("class", "tag")
-                .attr("r", function(d) { return d.count*3.5; })
-                .on("mouseover", function(d){ return tooltip.style("visibility", "visible").html( '<h3>' + d.name + '</h3><b>Rarity:</b> ' + d.rarity + ' of 10' + '<br><b>Sense of the Modern:</b> ' + d.modern + ' of 5' ); })
-                .on("mousemove", function(d){ return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px"); })
-                .on("mouseout", function(d){ return tooltip.style("visibility", "hidden"); });
+                node.append("circle")
+                    .attr("r", function(d) { return d.r; });
+
+                /*
+                svg.selectAll(".node:not(.leaf)")
+                    .append("text")
+                    .text(function(d) { return d.name; });
+                */
+                    
+                svg.selectAll(".leaf")
+                    .style("fill", function(d) { return color(d.rarity); })
+                    .on("mouseover", function(d){ return tooltip.style("visibility", "visible").html( '<h3>' + d.name + '</h3><b>Rarity:</b> ' + d.rarity + ' of 10' + '<br><b>Sense of the Modern:</b> ' + d.modern + ' of 5' ); })
+                    .on("mousemove", function(d){ return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px"); })
+                    .on("mouseout", function(d){ return tooltip.style("visibility", "hidden"); });
             
+            });
         });
         d3.select(self.frameElement).style("height", "600px");
         

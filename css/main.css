@@ -37,11 +37,12 @@ section.hero p.lead {
 
 
 section.clusters {
-    padding: 0;
+    padding: 40px 0;
     margin-bottom: 80px;
     background: #f1f2f2;
-    height: 630px;
+    min-height: 720px;
     position: relative;
+    overflow: hidden;
 }
 section.clusters:after {
     content: '';
@@ -62,17 +63,18 @@ section.clusters svg {
     margin: 0 auto;
     display: block;
 }
-section.clusters .cluster {
+section.clusters .node {
     fill-opacity: 0.05;
-    stroke: #AAA;
-    stroke-width: 4px;
-    stroke-dasharray: 10 10;
 }
-section.clusters .tag {
+section.clusters .leaf {
     fill: #e6550d;
     fill-opacity: 1;
+    stroke: none;
 }
-section.clusters text.label {
+section.clusters .leaf text {
+    display: none;
+}
+section.clusters text {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 12px;
