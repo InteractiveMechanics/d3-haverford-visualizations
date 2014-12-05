@@ -68,7 +68,7 @@ section.clusters .cluster {
     stroke-width: 4px;
     stroke-dasharray: 10 10;
 }
-section.clusters .node {
+section.clusters .tag {
     fill: #e6550d;
     fill-opacity: 1;
 }

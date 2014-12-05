@@ -210,10 +210,6 @@
                 posX = 0;
                 lastX = 0;
 
-            var pack = d3.layout.pack()
-                .size([200, 200])
-                .value(function(d) { return d.count*1.5; })
-                .padding(5);
 
             var tooltip = d3.select("body")
                 .append("div")
@@ -234,13 +230,14 @@
                 .append("g")
                 .attr("transform", function(d) { 
                     if (posX === 0){
-                        posX = d.count*1.5 + 20;
+                        posX = (d.count*1.5 + 20);
                     } else {
                         posX = posX + lastX + d.count*1.5 + 20;
                     }
                     lastX = d.count*1.5;
                     return "translate(" + posX + "," + diameter/2 + ")"; 
                 })
+                .append("g")
                 .append("circle")
                 .attr("class", "cluster")
                 .attr("r", function(d) {  return d.count*1.5; });
@@ -251,16 +248,16 @@
                 .attr("text-anchor", "middle")
                 .attr("y", function(d) {  return d.count*1.5 + 40; });
             
+
             var tags = cluster.selectAll(".cluster")
-                .data(pack)
+                .data(d3.layout.pack().sort(null).value(function(d) { return d.parent.count; }))
                 .enter()
                 .append("g")
                 .attr("class", "node")
-                .attr("transform", function(d) { return "translate(" + (d.x) + "," + d.y + ")"; })
-
-            tags.append("circle")
+                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+                .append("circle")
                 .attr("class", "tag")
-                .attr("r", function(d) { return d.count * 3; })
+                .attr("r", function(d) { return d.count*3.5; })
                 .on("mouseover", function(d){ return tooltip.style("visibility", "visible").html( '<h3>' + d.name + '</h3><b>Rarity:</b> ' + d.rarity + ' of 10' + '<br><b>Sense of the Modern:</b> ' + d.modern + ' of 5' ); })
                 .on("mousemove", function(d){ return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px"); })
                 .on("mouseout", function(d){ return tooltip.style("visibility", "hidden"); });
